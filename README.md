@@ -7,7 +7,6 @@
 Everything runs in your browser. Decisions are saved to your own device (`localStorage`) as a personal journal — open, edit or delete them any time. Nothing ever leaves your machine.
 
 **Live app:** https://crossroads.ivan-sostarko.workers.dev
-**Repository:** https://github.com/ivansostarko/crossroads
 
 ---
 
@@ -15,13 +14,10 @@ Everything runs in your browser. Decisions are saved to your own device (`localS
 
 > Science-based decision helper — weighted pros & cons, bias checks, premortem and next steps. Local-first, zero dependencies, open source.
 
-*(Copy-paste the line above into your repo's About → Description field.)*
-
 ---
 
 ## Screenshots
 
-<!-- Replace assets/screenshots/screen-N.png with your real screenshots (same file names). -->
 
 | Decision journal | Weighted pros & cons | The verdict |
 |---|---|---|
@@ -92,10 +88,6 @@ Then deploy:
 ```bash
 wrangler deploy
 ```
-
-Your app will be live at **`https://crossroads.ivan-sostarko.workers.dev`**.
-
-To set up continuous deployment, connect the GitHub repo in the Cloudflare dashboard (*Workers & Pages → Create → Pages → Connect to Git*) with no build command and `/` as the output directory — every push to `main` deploys automatically.
 
 ## Project structure
 
