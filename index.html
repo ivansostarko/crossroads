@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crossroads — a science-based decision helper</title>
+  <meta name="description" content="Crossroads is a guided, open-source decision helper built on decision science: weighted pros & cons, bias checks, premortem and next steps. Local-first, no accounts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===================== Page loader ===================== -->
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <svg class="brand-mark loader-mark" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 22 V12 M12 12 L4 4 M12 12 L20 4" />
+    </svg>
+    <span class="spinner spinner-dark" aria-hidden="true"></span>
+    <p>Loading Crossroads…</p>
+  </div>
+
+  <!-- ===================== HOME VIEW ===================== -->
+  <div class="home" id="homeView" hidden>
+    <header class="home-hero">
+      <div class="brand brand-big">
+        <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 22 V12 M12 12 L4 4 M12 12 L20 4" />
+        </svg>
+        <span>Crossroads</span>
+      </div>
+      <h1>Make the hard call, <br/>with science on your side.</h1>
+      <p class="lede">Crossroads walks you through a difficult decision in five short steps — each built on a documented finding from decision research. Everything stays on your device.</p>
+      <button class="btn btn-primary btn-big" id="newDecisionBtn" type="button">
+        <span class="btn-label">+ Start a new decision</span>
+      </button>
+    </header>
+
+    <!-- Saved decisions -->
+    <section class="home-section" aria-labelledby="journalTitle">
+      <h2 id="journalTitle">My decisions</h2>
+      <p class="hint">Saved automatically on this device. Open one to keep working, or delete it for good.</p>
+      <div class="journal" id="journalList"></div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="home-section" aria-labelledby="shotsTitle">
+      <h2 id="shotsTitle">Inside the app</h2>
+      <div class="shots">
+        <!-- Replace these placeholder files with your real screenshots,
+             keeping the same file names (assets/screenshots/screen-N.png) -->
+        <figure class="shot">
+          <img src="assets/screenshots/screen-1.png" alt="Screenshot: home screen with saved decisions" loading="lazy" />
+          <figcaption>Your decision journal</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/screenshots/screen-2.png" alt="Screenshot: weighted pros and cons" loading="lazy" />
+          <figcaption>Weighted pros &amp; cons</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="assets/screenshots/screen-3.png" alt="Screenshot: the verdict with balance beam" loading="lazy" />
+          <figcaption>The verdict</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <footer class="home-footer">
+      <p>Open source · MIT · <span class="muted">Local-first, nothing leaves your browser</span></p>
+    </footer>
+  </div>
+
+  <!-- ===================== WIZARD VIEW ===================== -->
+  <div class="app" id="wizardView" hidden>
+
+    <!-- Left rail: the path -->
+    <aside class="rail" aria-label="Progress">
+      <div class="rail-top">
+        <button class="btn btn-ghost btn-small" id="backHomeBtn" type="button">← My decisions</button>
+        <div class="brand">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 22 V12 M12 12 L4 4 M12 12 L20 4" />
+          </svg>
+          <span>Crossroads</span>
+        </div>
+      </div>
+
+      <nav class="steps" id="stepNav"></nav>
+
+      <div class="rail-footer">
+        <button class="btn btn-ghost btn-small" id="resetBtn" type="button">Clear this decision</button>
+        <p class="rail-note">Autosaved on this device.</p>
+      </div>
+    </aside>
+
+    <!-- Main panel -->
+    <main class="panel" id="panel">
+
+      <!-- STEP 0 · Situation -->
+      <section class="step" data-step="0">
+        <p class="eyebrow">Step 1 · The situation</p>
+        <h1>What decision are you facing?</h1>
+        <p class="lede">Writing the situation down in plain words is the first act of deciding. Research on expressive writing shows that naming a problem reduces its emotional noise and makes it easier to reason about.</p>
+
+        <label class="field">
+          <span class="field-label">Describe your current situation</span>
+          <textarea id="situation" rows="5" placeholder="e.g. I've been offered a new job in another city. My current job is stable but I've stopped growing…"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field-label">The decision, in one sentence</span>
+          <input type="text" id="decisionTitle" placeholder="e.g. Should I take the job in Zagreb?" />
+        </label>
+
+        <fieldset class="field choice-group">
+          <legend class="field-label">Is this decision reversible?</legend>
+          <p class="hint">Jeff Bezos calls these one-way vs. two-way doors. Reversible decisions deserve speed; irreversible ones deserve care.</p>
+          <div class="choices" role="radiogroup">
+            <label class="choice"><input type="radio" name="reversible" value="two-way" /> <span><strong>Two-way door</strong><br/>I can undo or adjust it later</span></label>
+            <label class="choice"><input type="radio" name="reversible" value="one-way" /> <span><strong>One-way door</strong><br/>Hard or impossible to undo</span></label>
+          </div>
+        </fieldset>
+
+        <label class="field field-inline">
+          <span class="field-label">When do you need to decide by? <em>(optional)</em></span>
+          <input type="date" id="deadline" />
+        </label>
+
+        <div class="step-actions">
+          <span></span>
+          <button class="btn btn-primary" data-next type="button"><span class="btn-label">Next: your options →</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 1 · Options -->
+      <section class="step" data-step="1" hidden>
+        <p class="eyebrow">Step 2 · Widen your options</p>
+        <h1>What could you do?</h1>
+        <p class="lede">The single biggest decision mistake found in research (Nutt, 1993; Heath &amp; Heath, 2013) is <strong>narrow framing</strong> — treating a choice as "whether or not" instead of "which of these". Add at least two real alternatives.</p>
+
+        <div class="options-list" id="optionsList"></div>
+        <button class="btn btn-ghost" id="addOptionBtn" type="button">+ Add another option</button>
+
+        <div class="nudge">
+          <p class="nudge-title">Vanishing options test</p>
+          <p>Imagine your current options disappeared. What would you do then? If something comes to mind — add it above.</p>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button"><span class="btn-label">Next: weigh them →</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 2 · Pros & Cons with weights -->
+      <section class="step" data-step="2" hidden>
+        <p class="eyebrow">Step 3 · Weigh the good and the bad</p>
+        <h1>Pros &amp; cons — with weight</h1>
+        <p class="lede">In 1772 Benjamin Franklin described his "moral algebra": list reasons for and against, then strike out items of equal weight until one side clearly wins. Modern decision analysis keeps the core idea — <strong>not every reason counts equally</strong>. Rate each from 1 (barely matters) to 5 (life-shaping).</p>
+
+        <div id="prosConsArea"></div>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button"><span class="btn-label">Next: reality check →</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 3 · Reality check -->
+      <section class="step" data-step="3" hidden>
+        <p class="eyebrow">Step 4 · Reality-test your thinking</p>
+        <h1>Check yourself before you decide</h1>
+        <p class="lede">Kahneman and Tversky showed that predictable biases quietly steer our choices. Ticking through them doesn't remove them, but naming a bias measurably weakens its pull.</p>
+
+        <div class="checklist" id="biasChecklist"></div>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button"><span class="btn-label">Next: premortem →</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 4 · Premortem -->
+      <section class="step" data-step="4" hidden>
+        <p class="eyebrow">Step 5 · Prepare to be wrong</p>
+        <h1>The premortem</h1>
+        <p class="lede">Gary Klein's technique, endorsed by Kahneman as his favourite debiasing tool: imagine it is <strong>one year from now</strong>, you chose your leading option, and it turned out badly. Prospective hindsight increases the ability to identify reasons for failure by ~30%.</p>
+
+        <label class="field">
+          <span class="field-label">It failed. Why? Write the story of what went wrong.</span>
+          <textarea id="premortem" rows="5" placeholder="A year later it fell apart because…"></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field-label">What could you do now to prevent or soften that failure?</span>
+          <textarea id="safeguards" rows="4" placeholder="Before committing, I could… / I'd set a tripwire: if X happens by June, I…"></textarea>
+        </label>
+
+        <div class="nudge">
+          <p class="nudge-title">Set a tripwire</p>
+          <p>Decisions drift. Pick a date or a signal that forces you to re-evaluate instead of coasting on autopilot ("If I haven't seen X by [date], I will reconsider").</p>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-prev type="button">← Back</button>
+          <button class="btn btn-primary" data-next type="button"><span class="btn-label">See the verdict →</span></button>
+        </div>
+      </section>
+
+      <!-- STEP 5 · Summary -->
+      <section class="step" data-step="5" hidden>
+        <p class="eyebrow">Step 6 · The verdict</p>
+        <h1 id="summaryTitle">Where the weight falls</h1>
+        <p class="lede">The scale below adds up your weighted pros and cons. It is a mirror, not an oracle — if the result surprises or annoys you, <em>that feeling is information too</em> (the "coin-flip test").</p>
+
+        <div id="summaryArea"></div>
+
+        <div class="next-steps">
+          <h2>Next steps</h2>
+          <label class="field">
+            <span class="field-label">The smallest concrete step you can take within 48 hours</span>
+            <input type="text" id="firstStep" placeholder="e.g. Email HR to ask about the relocation package" />
+          </label>
+          <label class="field">
+            <span class="field-label">Who will you tell about this decision?</span>
+            <p class="hint">Committing publicly, even to one person, dramatically raises follow-through (implementation-intention research, Gollwitzer 1999).</p>
+            <input type="text" id="accountability" placeholder="e.g. My brother, over coffee on Saturday" />
+          </label>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" data-prev type="button">← Back</button>
+          <div class="action-cluster">
+            <button class="btn btn-ghost" id="exportBtn" type="button"><span class="btn-label">Download summary</span></button>
+            <button class="btn btn-primary" id="copyBtn" type="button"><span class="btn-label">Copy summary</span></button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== Modal ===================== -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle"></h2>
+      <p id="modalBody"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modalCancel" type="button">Cancel</button>
+        <button class="btn btn-primary" id="modalConfirm" type="button"><span class="btn-label">Confirm</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Toasts ===================== -->
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
