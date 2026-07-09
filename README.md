@@ -19,7 +19,7 @@ Everything runs in your browser. Decisions are saved to your own device (`localS
 ## Screenshots
 
 
-| Decision journal | Weighted pros & cons | The verdict |
+
 |---|---|---|
 | ![Home screen with saved decisions](assets/screenshots/screen-1.png) | ![Weighted pros and cons](assets/screenshots/screen-2.png) | ![Verdict with balance beam](assets/screenshots/screen-3.png) |
 
