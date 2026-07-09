@@ -1,6 +1,6 @@
 # The research behind Crossroads
 
-Every step in the app maps to a documented finding in decision science. This file explains each one and lists the primary references, so contributors can extend the app without diluting its evidence base. **Rule of the repo: no new prompt or checklist item without a citation.**
+Every step in the app maps to a documented finding in decision science. This file explains each one and lists the primary references, so contributors can extend the app without diluting its evidence base.
 
 ---
 
